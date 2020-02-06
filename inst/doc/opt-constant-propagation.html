@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Constant Propagation</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>Constant Propagation</h1>
+
+<h2>Background</h2>
+
+<p>Constant propagation is the process of substituting the values of known constants in expressions. Constant propagation eliminates cases in which values are copied from one location or variable to another, in order to simply assign their value to another variable.</p>
+
+<p>For example, consider the following code:</p>
+
+<pre><code class="r">x &lt;- 14
+y &lt;- 7 - x / 2
+z &lt;- y * (28 / x + 2) - x
+</code></pre>
+
+<p>Here, <code>x</code> is assigned a constant, and thus, can be propagated (three times). Propagating yields:</p>
+
+<pre><code class="r">x &lt;- 14
+y &lt;- 7 - 14 / 2
+z &lt;- y * (28 / 14 + 2) - 14
+</code></pre>
+
+<p>Constant propagation enables the code to assign static values, which is faster than looking up and copying the value of a variable, and also saves time by eliminating assigning a value to a variable that is itself subsequently used only to propagate that value throughout the code. In some cases, copy propagation itself may not provide direct optimizations, but simply facilitates other transformations, such as <a href="opt-constant-folding.html">constant folding</a>, code motion, and <a href="opt-dead-code.html">dead code elimination</a>.</p>
+
+<h2>Example</h2>
+
+<p>A simple example would be a code that converts the unit of many temporary samples, from hours to miliseconds <code>miliseconds &lt;- 1000 * 60 * 60 * hours</code>.</p>
+
+<pre><code class="r">code &lt;- paste(
+  &quot;n &lt;- 1000&quot;,
+  &quot;hours_vector &lt;- runif(n, 0, 24)&quot;,
+  &quot;ms_vector &lt;- numeric(n)&quot;,
+  &quot;hs_to_mins &lt;- 60&quot;,
+  &quot;mins_to_secs &lt;- 60&quot;,
+  &quot;secs_to_ms &lt;- 1000&quot;,
+  &quot;# of course it would be much efficient to do vectorized operations xP&quot;,
+  &quot;for (i in 1:n) {&quot;,
+  &quot;  ms_vector[i] &lt;- secs_to_ms * mins_to_secs * hs_to_mins * hours_vector[i]&quot;,
+  &quot;}&quot;,
+  sep = &quot;\n&quot;
+)
+cat(code)
+</code></pre>
+
+<pre><code>## n &lt;- 1000
+## hours_vector &lt;- runif(n, 0, 24)
+## ms_vector &lt;- numeric(n)
+## hs_to_mins &lt;- 60
+## mins_to_secs &lt;- 60
+## secs_to_ms &lt;- 1000
+## # of course it would be much efficient to do vectorized operations xP
+## for (i in 1:n) {
+##   ms_vector[i] &lt;- secs_to_ms * mins_to_secs * hs_to_mins * hours_vector[i]
+## }
+</code></pre>
+
+<p>Then, the automatically optimized code would be:</p>
+
+<pre><code class="r">opt_code &lt;- opt_constant_propagation(list(code))
+cat(opt_code$codes[[1]])
+</code></pre>
+
+<pre><code>## n &lt;- 1000
+## hours_vector &lt;- runif(n, 0, 24)
+## ms_vector &lt;- numeric(n)
+## hs_to_mins &lt;- 60
+## mins_to_secs &lt;- 60
+## secs_to_ms &lt;- 1000
+## # of course it would be much efficient to do vectorized operations xP
+## for (i in 1:n) {
+##   ms_vector[i] &lt;- 1000 * 60 * 60 * hours_vector[i]
+## }
+</code></pre>
+
+<p>And if we measure the execution time of each one, and the speed-up:</p>
+
+<pre><code class="r">bmark_res &lt;- microbenchmark({
+  eval(parse(text = code))
+}, {
+  eval(parse(text = opt_code))
+})
+autoplot(bmark_res)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-6"/></p>
+
+<pre><code class="r">speed_up(bmark_res)
+</code></pre>
+
+<pre><code>##            Min.  1st Qu.   Median     Mean  3rd Qu.     Max.
+## Expr_2 25.37428 24.92539 24.00425 25.10222 23.52959 33.37287
+</code></pre>
+
+<h2>Implementation</h2>
+
+<p>The <code>opt_constant_propagation</code> optimizer analyzes the code from top to bottom. As it goes through the code, it performs two tasks:</p>
+
+<ul>
+<li><p>Saves, in the <code>values</code> vector, those variables that are assigned a constant value. I.e., if <code>x &lt;- -3</code>, then <code>values$x &lt;- -3</code>.</p></li>
+<li><p>Each variable that is assigned an expression that includes a variable present in <code>values</code> is given the corresponding constant value. I.e., <code>y &lt;- 7 * x + z</code> is transformed to <code>y &lt;- 7 * -3 + z</code>.</p></li>
+</ul>
+
+<p>Depending on what expression it finds, it applies one of the following criteria:</p>
+
+<h3><code>VAR &lt;- CONST</code></h3>
+
+<p>If it is an assignment of a constant value: then it keeps the same expression, and saves <code>VAR = CONST</code> in <code>values</code>.</p>
+
+<p>This criteria also includes, multi-assign ( <code>VAR &lt;- VAR &lt;- CONST</code> ).</p>
+
+<h3><code>VAR * CONST + VAR</code></h3>
+
+<p>If it is only operators, variables, constants, and precedence operators: then it will check if any of the variables is stored in <code>values</code> vector, and would replace them in the expression. It will return the modified expression.</p>
+
+<h3><code>FUN({FUN_PARAMS})</code></h3>
+
+<p>If it is a function call, and <code>opt_constant_propagation</code>&#39;s <code>in_fun_call</code> parameter is set to <code>TRUE</code>: then it will try to constant propagate in <code>{FUN_PARAMS}</code>. Consider the case that the function call is <code>seq_len(x+30)</code>, it could be replaced by <code>seq_len(-3+30)</code>.</p>
+
+<p>Then, <strong>it empties the <code>values</code> vector</strong> ( <code>values &lt;- c()</code> ). It should be noted that in R, calling a function can modify the current environment, being the simplest example <code>rm(list = ls())</code>, or <code>assign(&quot;x&quot;, 4)</code>.</p>
+
+<h3><code>LOOP (COND) { BODY }</code></h3>
+
+<p>If it is a loop ( <code>repeat</code>, <code>while</code>, or <code>for</code> ): it will get which variables are being assigned in the loop and remove them from <code>values</code>, and then propagate in <code>COND</code> and <code>BODY</code>.</p>
+
+<p>In-loop assigned variables are removed from <code>values</code> as, if not, it would try to propagate them, and these variables might change in next execution of <code>BODY</code>. For instance:</p>
+
+<pre><code class="r">x &lt;- 3
+y &lt;- 1 + 1
+while (y &lt; 5) {
+  y &lt;- x
+  x &lt;- x + 1
+}
+</code></pre>
+
+<p>Would try to propagate to:</p>
+
+<pre><code class="r">x &lt;- 3
+y &lt;- 1 + 1
+while (y &lt; 5) {
+  y &lt;- 3
+  x &lt;- 3 + 1
+}
+</code></pre>
+
+<p>which is not equivalent.</p>
+
+<h3><code>IF (COND) { BODY } ELSE { BODY }</code></h3>
+
+<p>If it is an <code>if</code>: it will propagate <code>values</code> in <code>COND</code> and <code>BODY</code>, then it will get which variables are being assigned in the if/else <code>BODY</code> and remove them from <code>values</code>.</p>
+
+<p>In-loop assigned variables are removed from <code>values</code>, as it is possible that the <code>BODY</code> is never executed (<code>FALSE</code> condition), and thus, these variables would not be updated or assigned.</p>
+
+<h3><code>VAR &lt;- EXPR</code></h3>
+
+<p>If it is an assignment (of a non constant value): it will keep <code>VAR &lt;-</code> and try to propagate on <code>EXPR</code>. Moreover, it will remove <code>VAR</code> from <code>values</code> as it is assigned a non-constant value.</p>
+
+<h3><code>FUN ({FUN_PARAMS}) { BODY }</code></h3>
+
+<p>If it is a function definition: it will propagate on the <code>BODY</code> but with a new empty <code>values</code> vector (the global <code>values</code> vector would not be changed). Note that in R, a function definition will have another environment, and thus it should not use the current <code>values</code>.</p>
+
+<h3>Other cases</h3>
+
+<p>In any other case, it should keep propagating on sub-expressions.</p>
+
+<h2>To-Do</h2>
+
+<ul>
+<li><p>Recognize functions that modify the environment?</p>
+
+<p>When <code>opt_constant_propagation</code> finds a function call, it deletes the previously found constant-assigned values. This is mainly done to avoid having</p>
+
+<pre><code class="r">x &lt;- 1
+assign(&quot;x&quot;, 3)
+y &lt;- x
+</code></pre>
+
+<p>Propagated to </p>
+
+<pre><code class="r">x &lt;- 1
+assign(&quot;x&quot;, 3)
+y &lt;- 1
+</code></pre>
+
+<p>In R we can list which <code>base</code> functions modify the environment, for example, <code>assign</code>, <code>rm</code>, etc. However, this would not be a solution, as we can define new functions that wrap the <code>base</code> ones, for instance:</p>
+
+<pre><code class="r">rm_all &lt;- function() {
+env &lt;- .GlobalEnv
+rm(list = ls(envir = env), envir = env)
+}
+</code></pre>
+
+<p>A possible solution would be to let the user identify which functions edit the environment.</p>
+
+<ul>
+<li>in a <code>roxygen2</code> way:</li>
+</ul>
+
+<pre><code class="r"># o @edits_env rm_all
+...
+</code></pre>
+
+<p>or</p>
+
+<pre><code class="r">rm_all() # o @edits_env
+</code></pre>
+
+<ul>
+<li>by parameter:</li>
+</ul>
+
+<pre><code class="r">opt_constant_propagation(list(code), env_edit = c(&quot;rm_all&quot;, ...))
+</code></pre></li>
+</ul>
+
+</body>
+
+</html>
